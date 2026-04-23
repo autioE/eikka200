@@ -7,46 +7,53 @@ if (localStorage.getItem('theme') === 'light') {
 
 document.addEventListener('DOMContentLoaded', () => {
     const title = document.getElementById('main-title');
-    const originalText = title.innerText;
+    const originalText = title ? title.innerText : '';
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+';
 
     // Fast random glitch effect on title
-    setInterval(() => {
-        if (Math.random() > 0.92) { // Infrequent glitching
-            let glitchedText = originalText.split('').map(char => {
-                if (Math.random() > 0.9) {
-                    return chars[Math.floor(Math.random() * chars.length)];
-                }
-                return char;
-            }).join('');
+    if (title) {
+        setInterval(() => {
+            if (Math.random() > 0.92) { // Infrequent glitching
+                let glitchedText = originalText.split('').map(char => {
+                    if (Math.random() > 0.9) {
+                        return chars[Math.floor(Math.random() * chars.length)];
+                    }
+                    return char;
+                }).join('');
 
-            title.innerText = glitchedText;
+                title.innerText = glitchedText;
 
-            setTimeout(() => {
-                title.innerText = originalText;
-            }, 150); // Slower recovery
-        }
-    }, 600);
+                setTimeout(() => {
+                    title.innerText = originalText;
+                }, 150); // Slower recovery
+            }
+        }, 600);
+    }
 
     // Aggressive mouse interactive movement for cards
-    document.addEventListener('mousemove', (e) => {
-        const cards = document.querySelectorAll('.card');
-        const mouseX = e.clientX / window.innerWidth - 0.5;
-        const mouseY = e.clientY / window.innerHeight - 0.5;
+    // Aggressive mouse interactive movement for cards - Disable on touch devices
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-        cards.forEach(card => {
-            // Intense tilt
-            card.style.transform = `perspective(1000px) rotateY(${mouseX * 25}deg) rotateX(${-mouseY * 25}deg) translateZ(20px)`;
-        });
-    });
+    if (!isTouchDevice) {
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.card');
+            const mouseX = e.clientX / window.innerWidth - 0.5;
+            const mouseY = e.clientY / window.innerHeight - 0.5;
 
-    // Reset card transform on leave
-    document.addEventListener('mouseleave', () => {
-        const cards = document.querySelectorAll('.card');
-        cards.forEach(card => {
-            card.style.transform = `perspective(1000px) rotateY(0deg) rotateX(0deg) translateZ(0px)`;
+            cards.forEach(card => {
+                // Intense tilt
+                card.style.transform = `perspective(1000px) rotateY(${mouseX * 25}deg) rotateX(${-mouseY * 25}deg) translateZ(20px)`;
+            });
         });
-    });
+
+        // Reset card transform on leave
+        document.addEventListener('mouseleave', () => {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.style.transform = `perspective(1000px) rotateY(0deg) rotateX(0deg) translateZ(0px)`;
+            });
+        });
+    }
 
     // Fast chaotic canvas background
     const canvasContainer = document.getElementById('canvas-container');
@@ -161,11 +168,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 themeText.innerText = isLight ? 'DARK MODE' : 'LIGHT MODE';
             }
 
-            // Trigger a small glitch on toggle
-            title.innerText = 'REBOOTING...';
-            setTimeout(() => {
-                title.innerText = originalText;
-            }, 300);
+            // Trigger a small glitch on toggle if title exists
+            if (title) {
+                title.innerText = 'REBOOTING...';
+                setTimeout(() => {
+                    title.innerText = originalText;
+                }, 300);
+            }
         });
     }
 
@@ -182,6 +191,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     if (revealBtn && mainSection) {
+        // Ensure button is visible if no hash (reset any leftover styles)
+        revealBtn.style.opacity = '1';
+        revealBtn.style.pointerEvents = 'all';
+
         // Check if hash is #about on load or if we navigated back
         if (window.location.hash === '#about') {
             revealContent();
@@ -194,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Smooth scroll with a slight delay to allow display: block to take effect
             setTimeout(() => {
                 mainSection.scrollIntoView({ behavior: 'smooth' });
-            }, 10);
+            }, 50);
         });
     }
 
