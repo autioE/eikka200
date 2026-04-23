@@ -133,6 +133,12 @@ main {
     position: relative;
 }
 
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
 .card:hover {
     background: var(--primary-color);
     color: var(--bg-color);
@@ -150,6 +156,7 @@ main {
     font-family: var(--font-mono);
     font-size: 1.1rem;
 }
+
 
 .marquee {
     position: fixed;

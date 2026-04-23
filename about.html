@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABOUT ME // EIKKA200</title>
+    <link rel="stylesheet" href="homepage.css">
+    <style>
+        .about-header {
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .about-header h1 {
+            font-size: clamp(2rem, 8vw, 6rem);
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: -0.03em;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.5rem 1rem;
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            color: var(--secondary-color);
+            text-decoration: none;
+            border: 2px solid var(--secondary-color);
+            transition: all 0.2s ease;
+        }
+
+        .back-link:hover {
+            background: var(--secondary-color);
+            color: var(--bg-color);
+        }
+
+        .profile-image-wrapper {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto 2rem;
+            border: 4px solid var(--primary-color);
+            overflow: hidden;
+            background: var(--primary-color);
+        }
+
+        .profile-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: grayscale(0.5) contrast(1.2);
+            transition: all 0.3s ease;
+        }
+
+        .profile-image:hover {
+            filter: grayscale(0) contrast(1);
+            transform: scale(1.02);
+        }
+
+        .about-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .about-section {
+            border: 4px solid var(--primary-color);
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            background: rgba(227, 14, 14, 0.05);
+        }
+
+        .about-section h2 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .about-text {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-color);
+        }
+
+        .timeline {
+            margin-top: 3rem;
+        }
+
+        .timeline-item {
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -12px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border: 4px solid var(--bg-color);
+        }
+
+        .timeline-date {
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="noise-bg"></div>
+    <div id="canvas-container"></div>
+
+    <div class="about-header">
+        <a href="index.html" class="back-link">← BACK TO HOME</a>
+        <h1>ABOUT ME</h1>
+    </div>
+
+    <div class="about-container">
+        <div class="profile-image-wrapper">
+            <img src="IMG_6632.jpg" alt="EIKKA200" class="profile-image">
+        </div>
+        <div class="about-section">
+            <h2>THE PROTOCOL</h2>
+            <p class="about-text">
+
+            </p>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">2007 // BORN</div>
+                <div class="timeline-content">BORN IN OULU, FINLAND</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2020 // FIRST HEADPHONES</div>
+                <div class="timeline-content">GOT MY FIRST HEADPHONES, STARTED LISTENING TO MUSIC INTENSELY</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2023 // FIRST DAW ON COMPUTER</div>
+                <div class="timeline-content">BOUGHT FL STUDIO TO MY COMPUTER. STARTED LEARNING TO PRODUCE MUSIC.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2024 // BEGINNING OF CONTENT CREATION</div>
+                <div class="timeline-content">STARTED DROPPING TIKTOK CONTENT. ALMOST EVERY VIDEO HAD 0-10 VIEWS.
+                    LUCKILY THERE WAS COUPLE POSTS WITH 30K+ VIEWS. THIS WAS A SIGN I SHOULD CONTINUE.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2025 // </div>
+                <div class="timeline-content">ALMOST GAVE UP SOCIAL MEDIA, BUT HARD WORK PAID OFF AND I GOT 800K VIEWS
+                    ON TIKTOK</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2026 // STRESSFUL BEGINNING OF THE YEAR</div>
+                <div class="timeline-content">CURRENT STATE. TWO SCHOOLS AT THE SAME TIME, RACING MOUNTAIN BIKES, TRYING
+                    TO KEEP THE SOCIAL MEDIA ACTIVE.</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
