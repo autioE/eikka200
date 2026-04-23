@@ -1,5 +1,10 @@
 // script.js - Fast, energetic effects for EIKKA200
 
+// Apply theme immediately to prevent flash
+if (localStorage.getItem('theme') === 'light') {
+    document.body.classList.add('light-theme');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const title = document.getElementById('main-title');
     const originalText = title.innerText;
@@ -65,18 +70,32 @@ document.addEventListener('DOMContentLoaded', () => {
             size: Math.random() * 4 + 1,
             speedY: (Math.random() * 8 + 2) * (Math.random() > 0.5 ? 1 : -1), // Fast
             speedX: (Math.random() * 8 + 2) * (Math.random() > 0.5 ? 1 : -1), // Fast
-            color: Math.random() > 0.5 ? '#e30e0e' : '#180ee3' // Red or Blue
+            isPrimary: Math.random() > 0.5
         });
     }
 
     function animate() {
         // Leave a slight trail for motion blur effect
-        ctx.fillStyle = 'rgba(10, 10, 10, 0.3)';
+        if (document.body.classList.contains('light-theme')) {
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+        } else {
+            ctx.fillStyle = 'rgba(10, 10, 10, 0.3)';
+        }
         ctx.fillRect(0, 0, width, height);
 
+        const primaryColor = getComputedStyle(document.body).getPropertyValue('--primary-color').trim();
+        const secondaryColor = getComputedStyle(document.body).getPropertyValue('--secondary-color').trim();
+
         particles.forEach(p => {
-            ctx.fillStyle = p.color;
+            if (document.body.classList.contains('light-theme')) {
+                ctx.globalAlpha = 0.2; // Much softer in light mode
+            } else {
+                ctx.globalAlpha = 1.0;
+            }
+
+            ctx.fillStyle = p.isPrimary ? primaryColor : secondaryColor;
             ctx.fillRect(p.x, p.y, p.size, p.size); // Sharp square particles
+            ctx.globalAlpha = 1.0; // Reset alpha for next frame/elements
 
             p.y += p.speedY;
             p.x += p.speedX;
@@ -123,6 +142,61 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.5 });
 
     counters.forEach(counter => observer.observe(counter));
+
+    // Theme Toggle Logic
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeText = document.getElementById('theme-text');
+
+    if (themeText) {
+        themeText.innerText = document.body.classList.contains('light-theme') ? 'DARK MODE' : 'LIGHT MODE';
+    }
+
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-theme');
+            const isLight = document.body.classList.contains('light-theme');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+
+            if (themeText) {
+                themeText.innerText = isLight ? 'DARK MODE' : 'LIGHT MODE';
+            }
+
+            // Trigger a small glitch on toggle
+            title.innerText = 'REBOOTING...';
+            setTimeout(() => {
+                title.innerText = originalText;
+            }, 300);
+        });
+    }
+
+    // Reveal Content Logic
+    const revealBtn = document.querySelector('.btn');
+    const mainSection = document.getElementById('about');
+
+    const revealContent = () => {
+        if (mainSection) mainSection.style.display = 'block';
+        if (revealBtn) {
+            revealBtn.style.opacity = '0';
+            revealBtn.style.pointerEvents = 'none';
+        }
+    };
+
+    if (revealBtn && mainSection) {
+        // Check if hash is #about on load or if we navigated back
+        if (window.location.hash === '#about') {
+            revealContent();
+        }
+
+        revealBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            revealContent();
+
+            // Smooth scroll with a slight delay to allow display: block to take effect
+            setTimeout(() => {
+                mainSection.scrollIntoView({ behavior: 'smooth' });
+            }, 10);
+        });
+    }
 
     console.log("EIKKA200 OVERRIDE // SYSTEM HIJACKED // RED AND BLUE ACTIVE");
 });

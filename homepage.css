@@ -1,11 +1,28 @@
 :root {
     --bg-color: #0a0a0a;
-    --primary-color: #e30e0e; /* Fast Red */
-    --secondary-color: #180ee3; /* Fast Blue */
-    --accent-color: #ffffff; /* White */
+    --primary-color: #e30e0e;
+    /* Fast Red */
+    --secondary-color: #180ee3;
+    /* Fast Blue */
+    --accent-color: #ffffff;
+    /* White */
     --text-color: #ffffff;
     --font-main: 'Syne', sans-serif;
     --font-mono: 'Space Mono', monospace;
+}
+
+body.light-theme {
+    --bg-color: #ffffff;
+    --text-color: #0a0a0a;
+    --accent-color: #0a0a0a;
+    --primary-color: #8b00ff; /* Violet */
+    --secondary-color: #00b359; /* Lighter Green */
+}
+
+/* Hide glitch on subpages in light mode */
+body.light-theme h1:not(#main-title)::before,
+body.light-theme h1:not(#main-title)::after {
+    display: none;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Syne:wght@400..800&display=swap');
@@ -28,9 +45,11 @@ body {
 ::-webkit-scrollbar {
     width: 10px;
 }
+
 ::-webkit-scrollbar-track {
     background: var(--bg-color);
 }
+
 ::-webkit-scrollbar-thumb {
     background: var(--primary-color);
 }
@@ -73,7 +92,8 @@ h1 {
     z-index: 1;
 }
 
-h1::before, h1::after {
+#main-title::before,
+#main-title::after {
     content: "WHO IS EIKKA200";
     position: absolute;
     top: 0;
@@ -83,25 +103,43 @@ h1::before, h1::after {
     opacity: 0.8;
 }
 
-h1::before {
+#main-title::before {
     color: var(--secondary-color);
     z-index: -1;
-    animation: glitch 0.2s cubic-bezier(.25,.46,.45,.94) both infinite;
+    animation: glitch 0.2s cubic-bezier(.25, .46, .45, .94) both infinite;
 }
 
-h1::after {
-    color: #8a0000; /* Dark red instead of white to avoid harsh flash */
+#main-title::after {
+    color: #8a0000;
+    /* Dark red instead of white to avoid harsh flash */
     z-index: -2;
-    animation: glitch 0.2s cubic-bezier(.25,.46,.45,.94) reverse both infinite;
+    animation: glitch 0.2s cubic-bezier(.25, .46, .45, .94) reverse both infinite;
 }
 
 @keyframes glitch {
-    0% { transform: translate(0); }
-    20% { transform: translate(-8px, 8px); }
-    40% { transform: translate(-8px, -8px); }
-    60% { transform: translate(8px, 8px); }
-    80% { transform: translate(8px, -8px); }
-    100% { transform: translate(0); }
+    0% {
+        transform: translate(0);
+    }
+
+    20% {
+        transform: translate(-8px, 8px);
+    }
+
+    40% {
+        transform: translate(-8px, -8px);
+    }
+
+    60% {
+        transform: translate(8px, 8px);
+    }
+
+    80% {
+        transform: translate(8px, -8px);
+    }
+
+    100% {
+        transform: translate(0);
+    }
 }
 
 .sub-header {
@@ -116,7 +154,8 @@ h1::after {
 }
 
 main {
-    padding: 4rem 2rem;
+    padding: 1rem 2rem 5rem;
+    display: none; /* Hidden by default */
 }
 
 .grid-container {
@@ -171,6 +210,12 @@ main {
     border-top: 5px solid var(--primary-color);
 }
 
+@media (max-width: 1024px) {
+    .marquee {
+        display: none;
+    }
+}
+
 .marquee-content {
     display: inline-block;
     animation: marquee 22s linear infinite;
@@ -180,8 +225,13 @@ main {
 }
 
 @keyframes marquee {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
 }
 
 #canvas-container {
@@ -207,30 +257,71 @@ main {
     font-size: 1.2rem;
     transition: all 0.1s ease;
     box-shadow: 6px 6px 0 var(--primary-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: "";
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    background: linear-gradient(
+        45deg,
+        transparent 45%,
+        rgba(255, 255, 255, 0.3) 50%,
+        transparent 55%
+    );
+    animation: btn-scan 3s infinite;
+    pointer-events: none;
+}
+
+@keyframes btn-scan {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(0%, 0%) rotate(0deg); }
 }
 
 .btn:hover {
     background: var(--primary-color);
     color: var(--accent-color);
     border-color: var(--secondary-color);
-    box-shadow: -6px -6px 0 var(--secondary-color);
-    transform: translate(6px, 6px);
+    box-shadow: -8px -8px 0 var(--secondary-color);
+    transform: translate(8px, 8px);
+    animation: btn-glitch 0.15s linear infinite;
+}
+
+@keyframes btn-glitch {
+    0% { clip-path: inset(10% 0 30% 0); transform: translate(-2px, 2px); }
+    20% { clip-path: inset(30% 0 10% 0); transform: translate(2px, -2px); }
+    40% { clip-path: inset(50% 0 5% 0); transform: translate(-2px, -2px); }
+    60% { clip-path: inset(0% 0 60% 0); transform: translate(2px, 2px); }
+    80% { clip-path: inset(15% 0 15% 0); transform: translate(-2px, -2px); }
+    100% { clip-path: inset(10% 0 30% 0); transform: translate(0); }
 }
 
 .floating {
-    position: absolute;
+    position: fixed;
+    bottom: -10vh;
     font-size: 6rem;
     opacity: 0.3;
     user-select: none;
     pointer-events: none;
-    animation: float 6s linear infinite;
+    animation: float 10s linear infinite;
     color: var(--primary-color);
     font-weight: 800;
+    z-index: -1;
 }
 
 @keyframes float {
-    from { transform: translateY(110vh) rotate(0deg); }
-    to { transform: translateY(-10vh) rotate(720deg); }
+    from {
+        transform: translateY(20vh) rotate(0deg);
+    }
+
+    to {
+        transform: translateY(-120vh) rotate(720deg);
+    }
 }
 
 /* Stats Section */
@@ -328,9 +419,18 @@ main {
     height: 12px;
     border-radius: 50%;
 }
-.terminal-dot.red { background: var(--primary-color); }
-.terminal-dot.yellow { background: #f1c40f; }
-.terminal-dot.green { background: #2ecc71; }
+
+.terminal-dot.red {
+    background: var(--primary-color);
+}
+
+.terminal-dot.yellow {
+    background: #f1c40f;
+}
+
+.terminal-dot.green {
+    background: #2ecc71;
+}
 
 .terminal-title {
     font-family: var(--font-mono);
@@ -359,6 +459,13 @@ main {
 }
 
 @keyframes blink-cursor {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
 }
