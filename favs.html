@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CONTACT // EIKKA200</title>
+    <title>ALL TIME FAVS // EIKKA200</title>
     <link rel="stylesheet" href="homepage.css">
     <style>
-        .contact-header {
+        .favs-header {
             padding: 4rem 2rem 2rem;
             text-align: center;
         }
 
-        .contact-header h1 {
+        .favs-header h1 {
             font-size: clamp(2rem, 8vw, 6rem);
             color: var(--primary-color);
             text-transform: uppercase;
@@ -36,10 +36,40 @@
             color: var(--bg-color);
         }
 
-        .about-container {
-            max-width: 800px;
+        .favs-container {
+            max-width: 900px;
             margin: 0 auto;
             padding: 2rem;
+        }
+
+        .album-card {
+            border: 4px solid var(--secondary-color);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            background: rgba(24, 14, 227, 0.05);
+            transition: all 0.1s ease;
+        }
+
+        .album-card:hover {
+            border-color: var(--primary-color);
+            transform: translate(-5px, -5px);
+            box-shadow: 10px 10px 0 var(--primary-color);
+            background: #000;
+        }
+
+        .album-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .album-artist {
+            font-family: var(--font-mono);
+            color: var(--secondary-color);
+            font-size: 1rem;
+            margin-bottom: 1rem;
         }
     </style>
     <meta name="keywords" content="Elias Autio, born in Oulu, born 2007">
@@ -50,15 +80,20 @@
     <div class="noise-bg"></div>
     <div id="canvas-container"></div>
 
-    <div class="contact-header">
+    <div class="favs-header">
         <a href="index.html#about" class="back-link">← BACK TO HOME</a>
-        <h1>CONTACT</h1>
+        <h1>ALL TIME FAVS</h1>
     </div>
 
-    <div class="about-container" style="text-align: center; margin-top: 10vh;">
-        <a href="mailto:eikka201@gmail.com" style="text-decoration: none;">
-            <h2 style="font-size: clamp(2rem, 6vw, 5rem); color: var(--primary-color); font-weight: 900; letter-spacing: -0.05em; word-break: break-all;">eikka201@gmail.com</h2>
-        </a>
+    <div class="favs-container">
+        <div class="album-card">
+            <div class="album-title">UTOPIA</div>
+            <div class="album-artist">TRAVIS SCOTT</div>
+        </div>
+        <div class="album-card">
+            <div class="album-title">LONG.LIVE.A$AP</div>
+            <div class="album-artist">A$AP ROCKY</div>
+        </div>
     </div>
 
     <script src="script.js"></script>
